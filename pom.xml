@@ -2,22 +2,9 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>javax.jmdns</groupId>
 	<artifactId>jmdns</artifactId>
-	<version>3.4.2-SNAPSHOT</version>
+	<version>3.4.2-formicary1-SNAPSHOT</version>
 	<name>JmDNS</name>
 	<packaging>jar</packaging>
-	<parent>
-		<groupId>org.sonatype.oss</groupId>
-		<artifactId>oss-parent</artifactId>
-		<version>7</version>
-		<relativePath>.../parent/pom.xml</relativePath>
-		<!-- https://docs.sonatype.org/display/Repository/Sonatype+OSS+Maven+Repository+Usage+Guide -->
-		<!-- http://www.sonatype.com/people/2010/01/how-to-generate-pgp-signatures-with-maven/ -->
-		<!-- mvn release:clean -->
-		<!-- mvn release:prepare -->
-		<!-- mvn release:perform -->
-		<!-- mvn nexus:staging-close -->
-		<!-- mvn nexus:staging-promote -->
-	</parent>
 	<description>JmDNS is a Java implementation of multi-cast DNS and can be used for service registration and discovery in local area networks. JmDNS is fully compatible with Apple's Bonjour.
 The project was originally started in December 2002 by Arthur van Hoff at Strangeberry. In November 2003 the project was moved to SourceForge, and the name was changed from JRendezvous to JmDNS for legal reasons.
 Many thanks to Stuart Cheshire for help and moral support.</description>
@@ -28,9 +15,9 @@ Many thanks to Stuart Cheshire for help and moral support.</description>
 		<url>http://jmdns.sourceforge.net/</url>
 	</organization>
 	<scm>
-		<connection>scm:svn:https://jmdns.svn.sourceforge.net/svnroot/jmdns/trunk</connection>
-		<developerConnection>scm:svn:https://jmdns.svn.sourceforge.net/svnroot/jmdns/trunk</developerConnection>
-		<url>https://jmdns.svn.sourceforge.net/svnroot/jmdns</url>
+    <connection>scm:git@github.com:hani/calypsomonitor.git</connection>
+    <url>scm:git@github.com:hani/jmdns.git</url>
+    <developerConnection>scm:git:git@github.com:hani/jmdns.git</developerConnection>
 	</scm>
 	<distributionManagement>
 		<site>
@@ -239,10 +226,6 @@ Many thanks to Stuart Cheshire for help and moral support.</description>
 							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
 							<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
 						</manifest>
-						<manifestEntries>
-							<Implementation-Build>${buildNumber}</Implementation-Build>
-							<Implementation-Date>${maven.build.timestamp}</Implementation-Date>
-						</manifestEntries>
 					</archive>
 					<excludes>
 						<!-- This fixes a bug in clover where it writes some instrumentation files where it should not JIAR: Clover/CLOV-943 -->
@@ -275,22 +258,6 @@ Many thanks to Stuart Cheshire for help and moral support.</description>
 						</goals>
 					</execution>
 				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-site-plugin</artifactId>
-				<version>3.0</version>
-				<configuration>
-					<locales>en</locales>
-					<!--<templateFile>src/site/site.vm</templateFile> -->
-				</configuration>
-				<dependencies>
-					<dependency><!-- add support for ssh/scp -->
-						<groupId>org.apache.maven.wagon</groupId>
-						<artifactId>wagon-ssh</artifactId>
-						<version>1.0</version>
-					</dependency>
-				</dependencies>
 			</plugin>
 			<plugin>
 				<groupId>com.atlassian.maven.plugins</groupId>
@@ -328,13 +295,6 @@ Many thanks to Stuart Cheshire for help and moral support.</description>
 						</goals>
 					</execution>
 				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-release-plugin</artifactId>
-				<configuration>
-					<tagBase>https://jmdns.svn.sourceforge.net/svnroot/jmdns/tags/</tagBase>
-				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.sonatype.plugins</groupId>

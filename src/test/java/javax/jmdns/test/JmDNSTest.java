@@ -1,42 +1,22 @@
 package javax.jmdns.test;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
-import static junit.framework.Assert.*;
-import static org.easymock.EasyMock.capture;
-import static org.easymock.EasyMock.createMock;
-import static org.easymock.EasyMock.createNiceMock;
-import static org.easymock.EasyMock.replay;
-import static org.easymock.EasyMock.verify;
-
 import java.io.IOException;
-import java.net.DatagramPacket;
-import java.net.InetAddress;
-import java.net.Inet6Address;
-import java.net.MulticastSocket;
-import java.net.NetworkInterface;
-import java.net.UnknownHostException;
+import java.net.*;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.ConsoleHandler;
-import java.util.logging.Level;
-import java.util.logging.LogManager;
-import java.util.logging.Logger;
-
-import javax.jmdns.JmDNS;
-import javax.jmdns.ServiceEvent;
-import javax.jmdns.ServiceInfo;
-import javax.jmdns.ServiceListener;
-import javax.jmdns.ServiceTypeListener;
+import java.util.logging.*;
+import javax.jmdns.*;
 import javax.jmdns.impl.constants.DNSConstants;
 
 import junit.framework.Assert;
-
 import org.easymock.Capture;
 import org.easymock.EasyMock;
 import org.junit.Before;
 import org.junit.Test;
+
+import static junit.framework.Assert.*;
+import static org.easymock.EasyMock.*;
 
 public class JmDNSTest {
 
@@ -92,7 +72,7 @@ public class JmDNSTest {
             registry = JmDNS.create();
             registry.registerService(service);
         } finally {
-            if (registry != null) registry.close();
+            if (registry != null) registry.abort();
         }
     }
 
@@ -118,7 +98,7 @@ public class JmDNSTest {
             services = registry.list(service.getType());
             assertTrue("We should not see the service we just unregistered: ", services == null || services.length == 0);
         } finally {
-            if (registry != null) registry.close();
+            if (registry != null) registry.abort();
         }
     }
 
@@ -135,7 +115,7 @@ public class JmDNSTest {
         } catch (IllegalStateException exception) {
             // Expected exception.
         } finally {
-            if (registry != null) registry.close();
+            if (registry != null) registry.abort();
         }
     }
 
@@ -166,7 +146,7 @@ public class JmDNSTest {
             services = registry.list(service.getType());
             assertTrue("We should see the service we just reregistered: ", services != null && services.length > 0);
         } finally {
-            if (registry != null) registry.close();
+            if (registry != null) registry.abort();
         }
     }
 
@@ -180,7 +160,7 @@ public class JmDNSTest {
             ServiceInfo queriedService = registry.getServiceInfo(service.getType(), service.getName());
             assertEquals(service, queriedService);
         } finally {
-            if (registry != null) registry.close();
+            if (registry != null) registry.abort();
         }
     }
 
@@ -195,7 +175,7 @@ public class JmDNSTest {
             assertEquals("We should see the service we just registered: ", 1, services.length);
             assertEquals(service, services[0]);
         } finally {
-            if (registry != null) registry.close();
+            if (registry != null) registry.abort();
         }
     }
 
@@ -218,7 +198,7 @@ public class JmDNSTest {
             assertEquals("We should see the service we just registered: ", 1, services.length);
             assertEquals(service, services[0]);
         } finally {
-            if (registry != null) registry.close();
+            if (registry != null) registry.abort();
         }
     }
 
@@ -268,7 +248,7 @@ public class JmDNSTest {
             ServiceInfo resolvedInfo = capServiceResolvedEvent.getValue().getInfo();
             assertEquals("Did not get the expected service info: ", service, resolvedInfo);
         } finally {
-            if (registry != null) registry.close();
+            if (registry != null) registry.abort();
         }
     }
 
@@ -308,7 +288,7 @@ public class JmDNSTest {
             ServiceInfo resolvedInfo = capServiceResolvedEvent.getValue().getInfo();
             assertEquals("Did not get the expected service info: ", service, resolvedInfo);
         } finally {
-            if (registry != null) registry.close();
+            if (registry != null) registry.abort();
         }
     }
 
@@ -344,8 +324,8 @@ public class JmDNSTest {
             Object result = capServiceResolvedEvent.getValue().getInfo();
             assertEquals("Did not get the expected service info: ", service, result);
         } finally {
-            if (registry != null) registry.close();
-            if (newServiceRegistry != null) newServiceRegistry.close();
+            if (registry != null) registry.abort();
+            if (newServiceRegistry != null) newServiceRegistry.abort();
         }
     }
 
@@ -364,8 +344,8 @@ public class JmDNSTest {
 
             assertEquals("Did not get the expected service info: ", service, fetchedService);
         } finally {
-            if (registry != null) registry.close();
-            if (newServiceRegistry != null) newServiceRegistry.close();
+            if (registry != null) registry.abort();
+            if (newServiceRegistry != null) newServiceRegistry.abort();
         }
     }
 
@@ -396,8 +376,8 @@ public class JmDNSTest {
             fetchedServices = newServiceRegistry.list(service.getType());
             assertEquals("The service was not cancelled after the close:", 0, fetchedServices.length);
         } finally {
-            if (registry != null) registry.close();
-            if (newServiceRegistry != null) newServiceRegistry.close();
+            if (registry != null) registry.abort();
+            if (newServiceRegistry != null) newServiceRegistry.abort();
         }
     }
 
@@ -507,7 +487,7 @@ public class JmDNSTest {
             services = registry.list(service.getType().toLowerCase());
             assertTrue("We should not see the service we just unregistered: ", services == null || services.length == 0);
         } finally {
-            if (registry != null) registry.close();
+            if (registry != null) registry.abort();
         }
     }
 
@@ -535,7 +515,7 @@ public class JmDNSTest {
             services = registry.list(service.getType());
             assertTrue("We should not see the service we just unregistered: ", services == null || services.length == 0);
         } finally {
-            if (registry != null) registry.close();
+            if (registry != null) registry.abort();
         }
     }
 }
